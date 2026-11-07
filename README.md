@@ -1,65 +1,32 @@
-# Face Analysis Web Application
+# Face Analysis Web App
 
-This project consists of a **FastAPI-based backend** and a **Next.js-based frontend** to perform face analysis, including **emotion detection**, **age estimation**, and **gender classification**.
+Next.js frontend for the [Face Analysis API](https://github.com/Med-Amine-03/faceApi): take a photo with the webcam or upload one, and get the predicted **gender**, **age** and **emotion**.
 
----
+Live demo: [face-analysis-web-application.vercel.app](https://face-analysis-web-application.vercel.app/)
 
-## 🚀 Features
+## How it works
 
-- Predict emotion, age, and gender from images
-- RESTful API built with FastAPI
-- Machine learning models trained for:
-  - Emotion detection
-  - Age estimation
-  - Gender classification
-- Dockerized for easy deployment
-- Backend deployed to **Azure App Service** with Docker
-- Frontend built with **Next.js** and deployed to **Vercel**
+```
+Webcam capture / image upload (Next.js)
+            │
+            ▼
+POST /predict_all  →  FastAPI on Azure App Service (Docker)
+            │            3 CNNs trained from scratch (TensorFlow / Keras)
+            ▼
+Gender · age · emotion displayed in the interface
+```
 
----
-## ⚙️ Backend (API)
+Model results (validation): gender 88% accuracy, age MAE 6.7 years, emotion 60% accuracy on 7 classes. Training notebooks and details are in the [API repository](https://github.com/Med-Amine-03/faceApi).
 
-The backend is built with **FastAPI**. It serves endpoints to analyze images and return predictions for emotion, age, and gender.
+## Tech stack
 
-### ✅ Steps
+Next.js · React · TypeScript · Tailwind CSS · shadcn/ui · Vercel (frontend) · FastAPI · Docker · Azure (backend)
 
-1. **Model Training**
+## Run it
 
-   Models were trained beforehand for:
-   - Emotion classification
-   - Age estimation
-   - Gender classification
-
-2. **FastAPI Implementation**
-
-   - Endpoints for predictions
-   - Loads trained models
-   - Returns JSON results
-
-3. **Containerization with Docker**
-
-   - A Dockerfile is used to package the FastAPI app.
-   - Example build and run:
-
-     ```bash
-     docker build -t face-analysis-api .
-     docker run -p 8000:8000 face-analysis-api
-     ```
-
-4. **Deployment on Azure**
-
-   - Docker image is pushed to Docker Hub
-   - Azure App Service (Web App for Containers) is configured to pull the image
-   - Azure handles hosting and scaling
-
----
-
-## 🌐 Frontend (Interface)
-
-The interface is built with **Next.js**. It lets users upload images and see predictions.
-
-- Built with React (Next.js)
-- Calls the FastAPI backend via REST
-- Deployed on **Vercel** for easy hosting
-
----
+```bash
+git clone https://github.com/Med-Amine-03/Face-Analysis-Web-Application.git
+cd Face-Analysis-Web-Application
+npm install
+npm run dev   # http://localhost:3000
+```
